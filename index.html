@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GameZone - Jeux en Ligne</title>
+    <title>ONG Man-La - La Culture c'est nous!</title>
     <style>
         * {
             margin: 0;
@@ -13,227 +13,513 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            color: #fff;
+            transition: all 0.5s ease;
+        }
+
+        /* Thèmes de couleur */
+        .theme-purple {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .theme-blue {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        .theme-green {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+        .theme-red {
+            background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+        }
+        .theme-orange {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+        }
+
+        .theme-selector {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .theme-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid white;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.2);
+        }
+
+        .theme-purple-btn { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .theme-blue-btn { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+        .theme-green-btn { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+        .theme-red-btn { background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%); }
+        .theme-orange-btn { background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%); }
+
+        .time-display {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            z-index: 1000;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 0 20px;
         }
 
         header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #764ba2;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover {
+            color: #764ba2;
+        }
+
+        .admin-btn {
+            background: #ff6b6b;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+
+        .admin-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        main {
+            margin-top: 80px;
+            background: white;
+            border-radius: 20px;
+            margin-left: 20px;
+            margin-right: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .section {
+            padding: 4rem 0;
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
             text-align: center;
-            margin-bottom: 40px;
-            animation: fadeInDown 1s ease-out;
+            padding: 6rem 0;
+            position: relative;
+            overflow: hidden;
         }
 
-        h1 {
-            font-size: 3.5em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="%23ffffff" opacity="0.1"><polygon points="0,0 1000,0 1000,100"/></svg>');
+            background-size: cover;
         }
 
-        .subtitle {
-            font-size: 1.2em;
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-quote {
+            font-size: 1.3rem;
+            font-style: italic;
+            margin-bottom: 2rem;
             opacity: 0.9;
-            margin-bottom: 30px;
+            animation: fadeInUp 1s ease 0.3s both;
         }
 
-        .games-grid {
+        .cta-button {
+            display: inline-block;
+            background: #ff6b6b;
+            color: white;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.4);
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            color: #764ba2;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            transition: color 0.5s;
+        }
+
+        .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
+            gap: 2rem;
+            margin: 2rem 0;
         }
 
-        .game-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            animation: fadeInUp 0.8s ease-out;
-        }
-
-        .game-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        .game-card h3 {
-            font-size: 1.8em;
-            margin-bottom: 15px;
-            color: #fff;
-        }
-
-        .game-card p {
-            margin-bottom: 20px;
-            opacity: 0.9;
-        }
-
-        .play-btn {
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            border: none;
-            padding: 12px 30px;
-            border-radius: 25px;
+        .project-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             color: white;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1em;
-        }
-
-        .play-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-
-        .game-area {
-            display: none;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            margin-top: 30px;
-        }
-
-        .game-area.active {
-            display: block;
-            animation: fadeIn 0.5s ease-out;
-        }
-
-        .back-btn {
-            background: #666;
-            border: none;
-            padding: 10px 20px;
+            padding: 2rem;
             border-radius: 15px;
-            color: white;
-            cursor: pointer;
-            margin-bottom: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
         }
 
-        .back-btn:hover {
-            background: #555;
-        }
-
-        /* Tic Tac Toe Styles */
-        .tic-tac-toe {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            max-width: 300px;
-            margin: 20px auto;
-        }
-
-        .tic-cell {
-            width: 80px;
-            height: 80px;
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            border-radius: 10px;
-            font-size: 2em;
-            font-weight: bold;
-            color: #fff;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .tic-cell:hover {
-            background: rgba(255, 255, 255, 0.3);
+        .project-card:hover {
             transform: scale(1.05);
         }
 
-        /* Snake Game Styles */
-        .snake-game {
-            text-align: center;
-        }
-
-        .snake-canvas {
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-radius: 10px;
-            background: rgba(0, 0, 0, 0.3);
-        }
-
-        .game-controls {
-            margin: 20px 0;
-        }
-
-        .control-btn {
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            padding: 15px 20px;
-            border-radius: 10px;
-            color: white;
-            margin: 5px;
-            cursor: pointer;
-            font-size: 1.2em;
-        }
-
-        .control-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        /* Memory Game Styles */
-        .memory-grid {
+        .portfolio-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            max-width: 400px;
-            margin: 20px auto;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
         }
 
-        .memory-card {
-            width: 80px;
-            height: 80px;
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            border-radius: 10px;
-            font-size: 2em;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        .portfolio-item {
+            background: #f8f9fa;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
         }
 
-        .memory-card:hover {
-            background: rgba(255, 255, 255, 0.3);
+        .portfolio-item:hover {
+            transform: translateY(-5px);
         }
 
-        .memory-card.flipped {
-            background: rgba(255, 255, 255, 0.8);
+        .portfolio-image {
+            width: 100%;
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .portfolio-content {
+            padding: 1.5rem;
+        }
+
+        .form-container {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
             color: #333;
         }
 
-        .game-info {
-            text-align: center;
-            margin: 20px 0;
-            font-size: 1.2em;
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
         }
 
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #764ba2;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .president-card {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .president-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .president-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .news-item {
+            background: white;
+            border-left: 4px solid #764ba2;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .news-date {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .admin-panel {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .admin-panel.active {
+            display: block;
+        }
+
+        .admin-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .admin-tab {
+            padding: 0.8rem 1.5rem;
+            background: #e9ecef;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .admin-tab.active {
+            background: #764ba2;
+            color: white;
+        }
+
+        .admin-content {
+            display: none;
+        }
+
+        .admin-content.active {
+            display: block;
+        }
+
+        .admin-dashboard {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+        }
+
+        .admin-sidebar {
+            background: #2c3e50;
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+        }
+
+        .admin-sidebar h3 {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .admin-menu {
+            list-style: none;
+        }
+
+        .admin-menu li {
+            margin-bottom: 1rem;
+        }
+
+        .admin-menu a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 0.5rem;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .admin-menu a:hover, .admin-menu a.active {
+            background: #34495e;
+        }
+
+        .admin-main {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .logout-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 2rem;
+            width: 100%;
+        }
+
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            color: #764ba2;
+            margin-bottom: 1rem;
+            transition: color 0.5s;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #555;
+            padding-top: 2rem;
+            margin-top: 2rem;
         }
 
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(50px);
+                transform: translateY(30px);
             }
             to {
                 opacity: 1;
@@ -241,524 +527,1787 @@
             }
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* Quiz Game Styles */
-        .quiz-container {
-            text-align: center;
-        }
-
-        .quiz-question {
-            font-size: 1.4em;
-            margin: 20px 0;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-        }
-
-        .quiz-options {
-            display: grid;
-            gap: 15px;
-            margin: 20px 0;
-        }
-
-        .quiz-option {
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            border-radius: 10px;
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: #4CAF50;
             color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 1001;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 15px;
+            margin: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            background: #f8f9fa;
+            padding: 1.5rem;
             cursor: pointer;
-            font-size: 1.1em;
-            transition: all 0.3s ease;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .quiz-option:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.02);
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
         }
 
-        .quiz-option.correct {
-            background: #4caf50;
+        .faq-answer.active {
+            padding: 1.5rem;
+            max-height: 500px;
         }
 
-        .quiz-option.incorrect {
-            background: #f44336;
+        .carousel {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            overflow: hidden;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .carousel-inner {
+            display: flex;
+            height: 100%;
+            transition: transform 0.5s ease;
+        }
+
+        .carousel-item {
+            min-width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .carousel-control {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            padding: 1rem;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .carousel-control.prev {
+            left: 0;
+            border-radius: 0 15px 15px 0;
+        }
+
+        .carousel-control.next {
+            right: 0;
+            border-radius: 15px 0 0 15px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        .social-link:hover {
+            transform: translateY(-3px);
+        }
+
+        .whatsapp { background: #25D366; }
+        .facebook { background: #4267B2; }
+        .instagram { 
+            background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+        }
+
+        /* Diaporama d'arrière-plan */
+        .background-slideshow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .background-slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        .background-slide.active {
+            opacity: 0.3;
+        }
+
+        /* Styles pour le redimensionnement d'images */
+        .image-preview-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .image-preview {
+            max-width: 100%;
+            max-height: 300px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .image-crop-controls {
+            display: none;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .cropper-container {
+            max-height: 400px;
+            margin-bottom: 1rem;
+        }
+
+        .download-btn {
+            background: #4CAF50;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        /* Styles pour les documents */
+        .document-item {
+            background: white;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .document-info {
+            flex: 1;
+        }
+
+        .document-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(255,255,255,0.98);
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .president-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .carousel {
+                height: 300px;
+            }
+            
+            .admin-dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .theme-selector {
+                bottom: 70px;
+                left: 10px;
+                flex-wrap: wrap;
+                width: calc(100% - 20px);
+                justify-content: center;
+            }
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Bibliothèque Cropper.js pour le redimensionnement d'images -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
 </head>
-<body>
-    <div class="container">
-        <header>
-            <h1>🎮 GameZone</h1>
-            <p class="subtitle">Votre destination pour des heures de divertissement !</p>
-        </header>
-
-        <div id="game-menu" class="games-grid">
-            <div class="game-card" onclick="showGame('tic-tac-toe')">
-                <h3>🎯 Tic-Tac-Toe</h3>
-                <p>Le classique jeu de stratégie ! Alignez 3 symboles pour gagner.</p>
-                <button class="play-btn">Jouer Maintenant</button>
-            </div>
-
-            <div class="game-card" onclick="showGame('snake')">
-                <h3>🐍 Snake</h3>
-                <p>Contrôlez le serpent, mangez les pommes et grandissez !</p>
-                <button class="play-btn">Jouer Maintenant</button>
-            </div>
-
-            <div class="game-card" onclick="showGame('memory')">
-                <h3>🧠 Memory</h3>
-                <p>Testez votre mémoire en retournant les cartes identiques.</p>
-                <button class="play-btn">Jouer Maintenant</button>
-            </div>
-
-            <div class="game-card" onclick="showGame('quiz')">
-                <h3>🤔 Quiz</h3>
-                <p>Testez vos connaissances avec des questions variées !</p>
-                <button class="play-btn">Jouer Maintenant</button>
-            </div>
-        </div>
-
-        <!-- Tic Tac Toe Game -->
-        <div id="tic-tac-toe-game" class="game-area">
-            <button class="back-btn" onclick="showMenu()">← Retour au Menu</button>
-            <h2 style="text-align: center; margin-bottom: 20px;">🎯 Tic-Tac-Toe</h2>
-            <div class="game-info">
-                <p id="tic-status">Joueur X commence !</p>
-            </div>
-            <div class="tic-tac-toe" id="tic-board"></div>
-            <div style="text-align: center; margin-top: 20px;">
-                <button class="play-btn" onclick="resetTicTacToe()">Nouvelle Partie</button>
-            </div>
-        </div>
-
-        <!-- Snake Game -->
-        <div id="snake-game" class="game-area">
-            <button class="back-btn" onclick="showMenu()">← Retour au Menu</button>
-            <div class="snake-game">
-                <h2>🐍 Snake Game</h2>
-                <div class="game-info">
-                    <p>Score: <span id="snake-score">0</span></p>
-                </div>
-                <canvas id="snake-canvas" class="snake-canvas" width="400" height="400"></canvas>
-                <div class="game-controls">
-                    <div>
-                        <button class="control-btn" onclick="changeDirection('up')">↑</button>
-                    </div>
-                    <div>
-                        <button class="control-btn" onclick="changeDirection('left')">←</button>
-                        <button class="play-btn" onclick="startSnake()" id="snake-start">Commencer</button>
-                        <button class="control-btn" onclick="changeDirection('right')">→</button>
-                    </div>
-                    <div>
-                        <button class="control-btn" onclick="changeDirection('down')">↓</button>
-                    </div>
-                </div>
-                <p style="margin-top: 15px; opacity: 0.8;">Utilisez les flèches du clavier ou les boutons</p>
-            </div>
-        </div>
-
-        <!-- Memory Game -->
-        <div id="memory-game" class="game-area">
-            <button class="back-btn" onclick="showMenu()">← Retour au Menu</button>
-            <h2 style="text-align: center;">🧠 Jeu de Mémoire</h2>
-            <div class="game-info">
-                <p>Coups: <span id="memory-moves">0</span> | Paires trouvées: <span id="memory-pairs">0</span>/8</p>
-            </div>
-            <div class="memory-grid" id="memory-board"></div>
-            <div style="text-align: center; margin-top: 20px;">
-                <button class="play-btn" onclick="resetMemory()">Nouvelle Partie</button>
-            </div>
-        </div>
-
-        <!-- Quiz Game -->
-        <div id="quiz-game" class="game-area">
-            <button class="back-btn" onclick="showMenu()">← Retour au Menu</button>
-            <div class="quiz-container">
-                <h2>🤔 Quiz</h2>
-                <div class="game-info">
-                    <p>Question <span id="quiz-current">1</span>/10 | Score: <span id="quiz-score">0</span></p>
-                </div>
-                <div class="quiz-question" id="quiz-question"></div>
-                <div class="quiz-options" id="quiz-options"></div>
-                <div style="margin-top: 20px;">
-                    <button class="play-btn" onclick="resetQuiz()" id="quiz-reset" style="display: none;">Recommencer</button>
-                </div>
-            </div>
-        </div>
+<body class="theme-purple">
+    <!-- Diaporama d'arrière-plan -->
+    <div class="background-slideshow" id="backgroundSlideshow">
+        <!-- Les images seront ajoutées dynamiquement par JavaScript -->
     </div>
 
+    <header>
+        <nav class="container">
+            <a href="#" class="logo">MAN-LA</a>
+            <ul class="nav-links">
+                <li><a onclick="showSection('accueil')">Accueil</a></li>
+                <li><a onclick="showSection('about')">À propos</a></li>
+                <li><a onclick="showSection('projets')">Projets</a></li>
+                <li><a onclick="showSection('portfolio')">Portfolio</a></li>
+                <li><a onclick="showSection('galerie')">Galerie</a></li>
+                <li><a onclick="showSection('actualites')">Actualités</a></li>
+                <li><a href="document.html">Documents</a></li>
+                <li><a onclick="showSection('faq')">FAQ</a></li>
+                <li><a onclick="showSection('contact')">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+            <button class="admin-btn" onclick="toggleAdmin()">Admin</button>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Section Accueil -->
+        <section id="accueil" class="section active">
+            <div class="hero">
+                <div class="hero-content container">
+                    <h1>ONG MAN-LA</h1>
+                    <p class="hero-quote">"Renier sa propre culture c'est traiter sa propre mère de laide et une autre de belle" - Jean-marie Adiafi</p>
+                    <a href="#" class="cta-button" onclick="showSection('about')">À propos de nous</a>
+                </div>
+            </div>
+            
+            <div class="container">
+                <div class="card">
+                    <h3>Notre Mission</h3>
+                    <p>Man-La est une organisation non gouvernementale dédiée à la défense et à la promotion de la culture africaine. Fondée par des passionnés de la riche diversité culturelle du continent, notre mission est de sensibiliser, éduquer et célébrer l'héritage africain à travers des initiatives locales et internationales.</p>
+                    <p>"l'histoire culturelle regarde ces enfants avec insistance, le souffle coupé et très soucieuse de la gestion de son héritage" - LALA .j</p>
+                </div>
+
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <h4>Culture</h4>
+                        <p>Préservation et promotion de l'héritage culturel africain</p>
+                    </div>
+                    <div class="project-card">
+                        <h4>Développement Durable</h4>
+                        <p>Actions pour un avenir respectueux de l'environnement</p>
+                    </div>
+                    <div class="project-card">
+                        <h4>Autonomisation</h4>
+                        <p>Renforcement des capacités des communautés locales</p>
+                    </div>
+                </div>
+            </div>
+            <center><a href="notremission.html" class="cta-button">Découvrir notre mission</a></center>
+        </section>
+
+        <!-- Section À propos -->
+        <section id="about" class="section">
+            <div class="container">
+                <h2 style="text-align: center; color: #764ba2; margin-bottom: 3rem; font-size: 2.5rem;">À propos de nous</h2>
+                
+                <div class="card">
+                    <h3>Notre Histoire</h3>
+                    <p>Chez Man-La, nous sommes engagés dans divers projets qui visent à promouvoir la culture africaine. Nous croyons fermement que la culture est le cœur de notre identité et un pilier essentiel pour le développement durable.</p>
+                    <p>Comme le dit un proverbe africain : "Un homme sans culture est comme un zèbre sans rayures." Nous aspirons à faire rayonner la culture africaine dans le monde entier.</p>
+                </div>
+
+                <div class="president-card">
+                    <div class="president-photo">
+                        <img src="images/Prési.jpg" alt="Photo de la présidente">
+                    </div>
+                    <div>
+                        <h3>KOUAME BENOUHAN REINE BRUNA Epouse AMIEZY</h3>
+                        <p><strong>Présidente et Cheffe d'Entreprise</strong></p>
+                        <p>Mme AMIEZI est une personne courageuse qui se bat chaque jour pour se faire une place dans la société. Titulaire d'un Baccalauréat, elle s'est donnée pour leitmotiv « la réussite se trouve au bout de l'effort ».</p>
+                        <p>Elle a créé en 2013 BRUNIVES, une entreprise multi-services qui lui a permit de s'ouvrir sur d'autres horizons. Aujourd'hui, femme accomplie, épouse comblée et mère dévouée, elle œuvre pour l'autonomisation et la valorisation de la culture et traditions ancestrales.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Projets -->
+        <section id="projets" class="section">
+            <div class="container">
+                <h2 style="text-align: center; color: #764ba2; margin-bottom: 3rem; font-size: 2.5rem;">Nos Projets</h2>
+                
+                <div class="projects-grid">
+                    <div class="card">
+                        <h3>Ateliers Culturels</h3>
+                        <p>Organisation d'ateliers d'art et de musique traditionnelle africaine pour transmettre les savoir-faire ancestraux aux jeunes générations.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Expositions</h3>
+                        <p>Mise en place d'expositions culturelles qui mettent en valeur les traditions africaines et sensibilisent le public à notre riche patrimoine.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Programmes Éducatifs</h3>
+                        <p>Développement de programmes éducatifs en collaboration avec les écoles pour intégrer la culture africaine dans l'enseignement.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Festivals Culturels</h3>
+                        <p>Organisation de festivals célébrant les arts traditionnels africains, créant des espaces d'échange et de partage culturel.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Formation Électorale</h3>
+                        <p>Sensibilisation et formation pour des élections apaisées (2019-2025), contribuant à la démocratie et à la paix sociale.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Environnement</h3>
+                        <p>Actions pour la protection de l'environnement : lutte contre le changement climatique, gestion des déchets, protection des océans.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+       <!-- Section Portfolio -->
+<section id="portfolio" class="section">
+    <div class="container">
+        <h2 style="text-align: center; color: #764ba2; margin-bottom: 3rem; font-size: 2.5rem;">Notre Portfolio</h2>
+        
+        
+        
+        <div class="portfolio-grid" id="portfolioGrid">
+            <!-- Les éléments seront chargés dynamiquement -->
+        </div>
+        
+        <div style="text-align: center; margin-top: 3rem;">
+            <a href="portfolio.html" class="cta-button">Voir tout le portfolio</a>
+        </div>
+    </div>
+</section>
+
+        <!-- Section Galerie -->
+        <section id="galerie" class="section">
+            <div class="container">
+                <h2 style="text-align: center; color: #764ba2; margin-bottom: 3rem; font-size: 2.5rem;">Galerie</h2>
+                
+                <div class="carousel">
+                    <div class="carousel-inner" id="carouselInner">
+                        <!-- Les éléments du carrousel seront chargés dynamiquement -->
+                    </div>
+                    <button class="carousel-control prev" onclick="prevSlide()">❮</button>
+                    <button class="carousel-control next" onclick="nextSlide()">❯</button>
+                </div>
+                
+                <div class="portfolio-grid" id="galleryGrid">
+                    <!-- Les éléments de la galerie seront chargés dynamiquement -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Actualités -->
+        <section id="actualites" class="section">
+            <div class="container">
+                <h2 style="text-align: center; color: #764ba2; margin-bottom: 3rem; font-size: 2.5rem;">Actualités</h2>
+                
+                <div id="newsList">
+                    <!-- Les actualités seront chargées dynamiquement -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Section FAQ -->
+        <section id="faq" class="section">
+            <div class="container">
+                <h2 style="text-align: center; color: #764ba2; margin-bottom: 3rem; font-size: 2.5rem;">Foire aux Questions</h2>
+                
+                <div id="faqList">
+                    <!-- Les questions seront chargées dynamiquement -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Contact -->
+        <section id="contact" class="section">
+            <div class="container">
+                <h2 style="text-align: center; color: #764ba2; margin-bottom: 3rem; font-size: 2.5rem;">Contactez-nous</h2>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
+                    <div>
+                        <div class="card">
+                            <h3>Informations de Contact</h3>
+                            <p><strong>Email:</strong> associationmanla@yahoo.com</p>
+                            <p><strong>Téléphone:</strong> +225 07 47 12 22 65</p>
+                            <p><strong>Téléphone 2:</strong> +225 01 01 48 25 47</p>
+                            <p><strong>Adresse:</strong> Abidjan, Côte d'Ivoire</p>
+                        </div>
+
+                        <div class="form-container">
+                            <h3>Formulaire d'Inscription</h3>
+                            <form id="inscriptionForm">
+                                <div class="form-group">
+                                    <label for="nom">Nom complet</label>
+                                    <input type="text" id="nom" name="nom" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" id="email" name="email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="telephone">Téléphone</label>
+                                    <input type="tel" id="telephone" name="telephone" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="interet">Domaine d'intérêt</label>
+                                    <select id="interet" name="interet" required>
+                                        <option value="">Choisissez...</option>
+                                        <option value="culture">Culture</option>
+                                        <option value="education">Éducation</option>
+                                        <option value="environnement">Environnement</option>
+                                        <option value="autonomisation">Autonomisation</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="submit-btn">S'inscrire</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="form-container">
+                            <h3>Suggestions de Projets</h3>
+                            <form id="suggestionForm">
+                                <div class="form-group">
+                                    <label for="nomProjet">Nom du projet</label>
+                                    <input type="text" id="nomProjet" name="nomProjet" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="description">Description</label>
+                                    <textarea id="description" name="description" rows="4" required></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="categorie">Catégorie</label>
+                                    <select id="categorie" name="categorie" required>
+                                        <option value="">Choisissez...</option>
+                                        <option value="culture">Culture</option>
+                                        <option value="education">Éducation</option>
+                                        <option value="environnement">Environnement</option>
+                                        <option value="social">Social</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="contact">Vos coordonnées</label>
+                                    <input type="text" id="contact" name="contact" required>
+                                </div>
+                                <button type="submit" class="submit-btn">Envoyer la suggestion</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Panel d'Administration -->
+        <div id="adminPanel" class="admin-panel">
+            <div class="container">
+                <div class="admin-dashboard">
+                    <div class="admin-sidebar">
+                        <h3>Tableau de Bord</h3>
+                        <ul class="admin-menu">
+                            <li><a href="#" class="active" onclick="showAdminTab('dashboard')"><i class="fas fa-tachometer-alt"></i> Tableau de bord</a></li>
+                            <li><a href="#" onclick="showAdminTab('actualites-admin')"><i class="fas fa-newspaper"></i> Actualités</a></li>
+                            <li><a href="#" onclick="showAdminTab('portfolio-admin')"><i class="fas fa-images"></i> Portfolio</a></li>
+                            <li><a href="#" onclick="showAdminTab('galerie-admin')"><i class="fas fa-photo-video"></i> Galerie</a></li>
+                            <li><a href="#" onclick="showAdminTab('faq-admin')"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                            <li><a href="#" onclick="showAdminTab('inscriptions-admin')"><i class="fas fa-users"></i> Inscriptions</a></li>
+                            <li><a href="#" onclick="showAdminTab('suggestions-admin')"><i class="fas fa-lightbulb"></i> Suggestions</a></li>
+                            <li><a href="#" onclick="showAdminTab('documents-admin')"><i class="fas fa-file-pdf"></i> Documents</a></li>
+                            <li><a href="#" onclick="showAdminTab('parametres')"><i class="fas fa-cog"></i> Paramètres</a></li>
+                        </ul>
+                        <button class="logout-btn" onclick="logoutAdmin()"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
+                    </div>
+                    
+                    <div class="admin-main">
+                        <div id="dashboard" class="admin-content active">
+                            <h2>Tableau de Bord</h2>
+                            <div class="card">
+                                <h3>Statistiques</h3>
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                                    <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; text-align: center;">
+                                        <h4>Actualités</h4>
+                                        <p id="stats-news">0</p>
+                                    </div>
+                                    <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; text-align: center;">
+                                        <h4>Portfolio</h4>
+                                        <p id="stats-portfolio">0</p>
+                                    </div>
+                                    <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; text-align: center;">
+                                        <h4>Galerie</h4>
+                                        <p id="stats-gallery">0</p>
+                                    </div>
+                                    <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; text-align: center;">
+                                        <h4>Inscriptions</h4>
+                                        <p id="stats-inscriptions">0</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card" style="margin-top: 2rem;">
+                                <h3>Actions Rapides</h3>
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                                    <button class="submit-btn" onclick="showAdminTab('actualites-admin')"><i class="fas fa-plus"></i> Ajouter une actualité</button>
+                                    <button class="submit-btn" onclick="showAdminTab('portfolio-admin')"><i class="fas fa-plus"></i> Ajouter au portfolio</button>
+                                    <button class="submit-btn" onclick="showAdminTab('galerie-admin')"><i class="fas fa-plus"></i> Ajouter à la galerie</button>
+                                    <button class="submit-btn" onclick="showAdminTab('faq-admin')"><i class="fas fa-plus"></i> Ajouter une FAQ</button>
+                                </div>
+                            </div>
+                            
+                            <div class="card" style="margin-top: 2rem;">
+                                <h3>Dernières Inscriptions</h3>
+                                <div id="latest-inscriptions" style="margin-top: 1rem;">
+                                    <!-- Les dernières inscriptions seront chargées ici -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="actualites-admin" class="admin-content">
+                            <h2>Gestion des Actualités</h2>
+                            <div class="form-container">
+                                <form id="newsForm">
+                                    <div class="form-group">
+                                        <label for="newsTitle">Titre</label>
+                                        <input type="text" id="newsTitle" name="newsTitle" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="newsContent">Contenu</label>
+                                        <textarea id="newsContent" name="newsContent" rows="4" required></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="newsImage">Image</label>
+                                        <input type="file" id="newsImage" name="newsImage" accept="image/*">
+                                        <div class="image-preview-container">
+                                            <img id="newsImagePreview" class="image-preview">
+                                            <div id="newsImageCropControls" class="image-crop-controls">
+                                                <div class="cropper-container">
+                                                    <img id="newsImageCropper" style="max-width: 100%;">
+                                                </div>
+                                                <button type="button" class="submit-btn" onclick="cropImage('newsImage')">Valider le recadrage</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="submit-btn">Ajouter Actualité</button>
+                                </form>
+                            </div>
+                            <div id="newsAdminList" style="margin-top: 2rem;"></div>
+                        </div>
+
+                        <div id="portfolio-admin" class="admin-content">
+                            <h2>Gestion du Portfolio</h2>
+                            <div class="form-container">
+                                <form id="portfolioForm">
+                                    <div class="form-group">
+                                        <label for="portfolioTitle">Titre</label>
+                                        <input type="text" id="portfolioTitle" name="portfolioTitle" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="portfolioDescription">Description</label>
+                                        <textarea id="portfolioDescription" name="portfolioDescription" rows="3" required></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="portfolioImage">Image</label>
+                                        <input type="file" id="portfolioImage" name="portfolioImage" accept="image/*">
+                                        <div class="image-preview-container">
+                                            <img id="portfolioImagePreview" class="image-preview">
+                                            <div id="portfolioImageCropControls" class="image-crop-controls">
+                                                <div class="cropper-container">
+                                                    <img id="portfolioImageCropper" style="max-width: 100%;">
+                                                </div>
+                                                <button type="button" class="submit-btn" onclick="cropImage('portfolioImage')">Valider le recadrage</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="submit-btn">Ajouter au Portfolio</button>
+                                </form>
+                            </div>
+                            <div id="portfolioAdminList" style="margin-top: 2rem;"></div>
+                        </div>
+
+                        <div id="galerie-admin" class="admin-content">
+                            <h2>Gestion de la Galerie</h2>
+                            <div class="form-container">
+                                <form id="galleryForm">
+                                    <div class="form-group">
+                                        <label for="galleryTitle">Titre</label>
+                                        <input type="text" id="galleryTitle" name="galleryTitle" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="galleryType">Type</label>
+                                        <select id="galleryType" name="galleryType" required>
+                                            <option value="image">Image</option>
+                                            <option value="video">Vidéo</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group" id="galleryImageField">
+                                        <label for="galleryImage">Image</label>
+                                        <input type="file" id="galleryImage" name="galleryImage" accept="image/*">
+                                        <div class="image-preview-container">
+                                            <img id="galleryImagePreview" class="image-preview">
+                                            <div id="galleryImageCropControls" class="image-crop-controls">
+                                                <div class="cropper-container">
+                                                    <img id="galleryImageCropper" style="max-width: 100%;">
+                                                </div>
+                                                <button type="button" class="submit-btn" onclick="cropImage('galleryImage')">Valider le recadrage</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" id="galleryVideoField" style="display: none;">
+                                        <label for="galleryVideo">URL de la vidéo YouTube</label>
+                                        <input type="text" id="galleryVideo" name="galleryVideo" placeholder="https://www.youtube.com/watch?v=...">
+                                    </div>
+                                    <button type="submit" class="submit-btn">Ajouter à la Galerie</button>
+                                </form>
+                            </div>
+                            <div id="galleryAdminList" style="margin-top: 2rem;"></div>
+                        </div>
+
+                        <div id="faq-admin" class="admin-content">
+                            <h2>Gestion de la FAQ</h2>
+                            <div class="form-container">
+                                <form id="faqForm">
+                                    <div class="form-group">
+                                        <label for="faqQuestion">Question</label>
+                                        <input type="text" id="faqQuestion" name="faqQuestion" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="faqAnswer">Réponse</label>
+                                        <textarea id="faqAnswer" name="faqAnswer" rows="3" required></textarea>
+                                    </div>
+                                    <button type="submit" class="submit-btn">Ajouter à la FAQ</button>
+                                </form>
+                            </div>
+                            <div id="faqAdminList" style="margin-top: 2rem;"></div>
+                        </div>
+
+                        <div id="inscriptions-admin" class="admin-content">
+                            <h2>Inscriptions Reçues</h2>
+                            <div id="inscriptionsList" style="margin-top: 1rem;"></div>
+                        </div>
+
+                        <div id="suggestions-admin" class="admin-content">
+                            <h2>Suggestions de Projets</h2>
+                            <div id="suggestionsList" style="margin-top: 1rem;"></div>
+                        </div>
+
+                        <div id="documents-admin" class="admin-content">
+                            <h2>Gestion des Documents</h2>
+                            <div class="form-container">
+                                <form id="documentForm">
+                                    <div class="form-group">
+                                        <label for="documentTitle">Titre du document</label>
+                                        <input type="text" id="documentTitle" name="documentTitle" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="documentDescription">Description</label>
+                                        <textarea id="documentDescription" name="documentDescription" rows="3" required></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="documentFile">Fichier (PDF, Word, Excel, etc.)</label>
+                                        <input type="file" id="documentFile" name="documentFile" required>
+                                    </div>
+                                    <button type="submit" class="submit-btn">Ajouter Document</button>
+                                </form>
+                            </div>
+                            <div id="documentsList" style="margin-top: 2rem;"></div>
+                        </div>
+
+                        <div id="parametres" class="admin-content">
+                            <h2>Paramètres du Site</h2>
+                            <div class="form-container">
+                                <form id="settingsForm">
+                                    <div class="form-group">
+                                        <label for="siteTitle">Titre du site</label>
+                                        <input type="text" id="siteTitle" name="siteTitle" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="adminEmail">Email administrateur</label>
+                                        <input type="email" id="adminEmail" name="adminEmail" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="adminPassword">Changer le mot de passe</label>
+                                        <input type="password" id="adminPassword" name="adminPassword" placeholder="Laisser vide pour ne pas changer">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="backgroundImages">Images d'arrière-plan (URLs séparées par des virgules)</label>
+                                        <textarea id="backgroundImages" name="backgroundImages" rows="4"></textarea>
+                                    </div>
+                                    <button type="submit" class="submit-btn">Enregistrer les modifications</button>
+                                </form>
+                            </div>
+                            
+                            <div class="card" style="margin-top: 2rem;">
+                                <h3>Sauvegarde et Restauration</h3>
+                                <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                                    <button class="submit-btn" onclick="exportData()"><i class="fas fa-download"></i> Exporter les données</button>
+                                    <button class="submit-btn" onclick="document.getElementById('importFile').click()"><i class="fas fa-upload"></i> Importer des données</button>
+                                    <input type="file" id="importFile" style="display: none;" onchange="importData(event)">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>ONG Man-La</h4>
+                    <p>Dédiée à la promotion et à la préservation de la culture africaine pour les générations présentes et futures.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Email: <a href="mailto:associationmanla@yahoo.com" style="color: #764ba2;">associationmanla@yahoo.com</a></p>
+                    <p>Tél: <a href="tel:+2250747122265" style="color: #764ba2;">+225 07 47 12 22 65</a></p>
+                    <p>Tél: <a href="tel:+2250101482547" style="color: #764ba2;">+225 01 01 48 25 47</a></p>
+                </div>
+                <div class="footer-section">
+                    <h4>Réseaux Sociaux</h4>
+                    <div class="social-links">
+                        <a href="https://wa.me/2250747122265" target="_blank" class="social-link whatsapp"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://facebook.com/votrepage" target="_blank" class="social-link facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://instagram.com/votrecompte" target="_blank" class="social-link instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                    <p style="margin-top: 1rem;">Suivez-nous sur nos réseaux pour ne rien manquer!</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p><strong>Man-La - La Culture c'est nous!!</strong></p>
+                <p>Conçu par LALA Kouassi Jason Kevin</p>
+                <p>&copy; 2025 ONG Man-La. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="theme-selector">
+        <div class="theme-btn theme-purple-btn" onclick="changeTheme('purple')"></div>
+        <div class="theme-btn theme-blue-btn" onclick="changeTheme('blue')"></div>
+        <div class="theme-btn theme-green-btn" onclick="changeTheme('green')"></div>
+        <div class="theme-btn theme-red-btn" onclick="changeTheme('red')"></div>
+        <div class="theme-btn theme-orange-btn" onclick="changeTheme('orange')"></div>
+    </div>
+
+    <div id="timeDisplay" class="time-display"></div>
+
+    <div id="notification" class="notification"></div>
+
+    <!-- Bibliothèques JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
     <script>
-        // Game Management
-        function showGame(gameId) {
-            document.getElementById('game-menu').style.display = 'none';
-            document.getElementById(gameId + '-game').classList.add('active');
+        // Fonction pour obtenir la base de données depuis localStorage
+        function getDatabase() {
+            const savedData = localStorage.getItem('manla-database');
             
-            if (gameId === 'tic-tac-toe') initTicTacToe();
-            if (gameId === 'memory') initMemory();
-            if (gameId === 'quiz') initQuiz();
-        }
-
-        function showMenu() {
-            document.querySelectorAll('.game-area').forEach(area => {
-                area.classList.remove('active');
-            });
-            document.getElementById('game-menu').style.display = 'grid';
-            
-            // Stop any running games
-            if (snakeInterval) clearInterval(snakeInterval);
-        }
-
-        // Tic Tac Toe Game
-        let ticBoard = ['', '', '', '', '', '', '', '', ''];
-        let currentPlayer = 'X';
-        let gameActive = true;
-
-        function initTicTacToe() {
-            const board = document.getElementById('tic-board');
-            board.innerHTML = '';
-            ticBoard = ['', '', '', '', '', '', '', '', ''];
-            currentPlayer = 'X';
-            gameActive = true;
-            
-            for (let i = 0; i < 9; i++) {
-                const cell = document.createElement('button');
-                cell.className = 'tic-cell';
-                cell.onclick = () => makeMove(i);
-                board.appendChild(cell);
+            if (savedData) {
+                return JSON.parse(savedData);
+            } else {
+                // Retourner la structure de base si rien n'est sauvegardé
+                return {
+                    actualites: [
+                        {
+                            id: 1,
+                            title: "Lancement du nouveau programme culturel",
+                            content: "Nous sommes fiers d'annoncer le lancement de notre nouveau programme de préservation culturelle en partenariat avec les écoles locales.",
+                            date: "2025-06-23",
+                            image: "images/logo.jpg"
+                        },
+                        {
+                            id: 2,
+                            title: "Festival d'été 2025",
+                            content: "Rejoignez-nous pour notre grand festival d'été célébrant la diversité culturelle africaine. Trois jours de musique, danse et art traditionnel.",
+                            date: "2025-06-20",
+                            image: "images/clbr.jpg" 
+                        }
+                    ],
+                    portfolio: [
+                        { 
+                            id: 1, 
+                            title: "Festival Culturel 2024", 
+                            description: "Célébration de la culture africaine avec des artistes locaux et internationaux.",
+                            image: "images/event1.jpg"
+                        },
+                        { 
+                            id: 2, 
+                            title: "Atelier de Musique Traditionnelle", 
+                            description: "Formation des jeunes aux instruments traditionnels africains.",
+                            image: "images/event2.jpg"
+                        }
+                    ],
+                    galerie: [
+                        {
+                            id: 1,
+                            title: "Performance artistique",
+                            type: "image",
+                            media: "images/gallery1.jpg"
+                        },
+                        {
+                            id: 2,
+                            title: "Documentaire culturel",
+                            type: "video",
+                            media: "https://www.youtube.com/embed/example"
+                        }
+                    ],
+                    faq: [
+                        {
+                            id: 1,
+                            question: "Comment puis-je m'impliquer dans vos activités?",
+                            answer: "Vous pouvez vous inscrire via notre formulaire en ligne ou nous contacter directement par email ou téléphone."
+                        },
+                        {
+                            id: 2,
+                            question: "Quels sont vos domaines d'intervention?",
+                            answer: "Nous intervenons principalement dans la culture, l'éducation, l'environnement et l'autonomisation des communautés."
+                        }
+                    ],
+                    documents: [
+                        {
+                            id: 1,
+                            title: "Rapport Annuel 2024",
+                            description: "Rapport d'activités de l'ONG Man-La pour l'année 2024.",
+                            file: "documents/rapport-2024.pdf",
+                            fileName: "rapport-2024.pdf"
+                        },
+                        {
+                            id: 2,
+                            title: "Brochure Culturelle",
+                            description: "Présentation de nos activités culturelles.",
+                            file: "documents/brochure-culture.pdf",
+                            fileName: "brochure-culture.pdf"
+                        }
+                    ],
+                    inscriptions: [],
+                    suggestions: [],
+                    settings: {
+                        siteTitle: "ONG Man-La",
+                        adminEmail: "associationmanla@yahoo.com",
+                        backgroundImages: [
+                            "images/prési1.jpg",
+                            "images/manla.jpg",
+                            "images/doché.jpg",
+                            "images/nat.jpg",
+                            "images/presi3.jpg",
+                            "images/nature.jpg",
+                            "images/EASIS.jpg",
+                            "images/presiA.jpg",
+                            "images/rebecca.jpg",
+                            "images/tradi4.jpg",
+                            "images/AT1.jpg",
+                            "images/A24.jpg",
+                            "images/A25.jpg",
+                            "images/A7.jpg",
+                            "images/A15.jpg"
+                        ].join(",")
+                    },
+                    admin: {
+                        username: "admin",
+                        password: "manla2025"
+                    }
+                };
             }
-            updateTicStatus('Joueur X commence !');
         }
 
-        function makeMove(index) {
-            if (ticBoard[index] === '' && gameActive) {
-                ticBoard[index] = currentPlayer;
-                document.querySelectorAll('.tic-cell')[index].textContent = currentPlayer;
+        // Initialiser la base de données
+        let database = getDatabase();
+
+        // Fonction pour sauvegarder la base de données
+        function saveDatabase() {
+            localStorage.setItem('manla-database', JSON.stringify(database));
+        }
+
+        // Variables pour le carrousel et le diaporama
+        let currentSlide = 0;
+        let slides = [];
+        let carouselInterval;
+        let backgroundSlides = [];
+        let backgroundInterval;
+        let cropper;
+
+        // Fonctions principales
+        function updateTimeAndTheme() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('fr-FR');
+            const dateString = now.toLocaleDateString('fr-FR', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            
+            document.getElementById('timeDisplay').textContent = `${dateString} - ${timeString}`;
+        }
+
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById('adminPanel').classList.remove('active');
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Réinitialiser le carrousel
+            if (sectionId === 'galerie') {
+                clearInterval(carouselInterval);
+                initCarousel();
+                carouselInterval = setInterval(nextSlide, 5000);
+            }
+        }
+
+        function toggleMobileMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        function toggleAdmin() {
+            const adminPanel = document.getElementById('adminPanel');
+            const sections = document.querySelectorAll('.section');
+            
+            if (adminPanel.classList.contains('active')) {
+                adminPanel.classList.remove('active');
+                document.getElementById('accueil').classList.add('active');
+            } else {
+                const username = prompt("Nom d'utilisateur admin:");
+                const password = prompt("Mot de passe admin:");
                 
-                if (checkWinner()) {
-                    updateTicStatus(`Joueur ${currentPlayer} gagne ! 🎉`);
-                    gameActive = false;
-                } else if (ticBoard.every(cell => cell !== '')) {
-                    updateTicStatus('Match nul ! 🤝');
-                    gameActive = false;
+                if (username === database.admin.username && password === database.admin.password) {
+                    sections.forEach(section => section.classList.remove('active'));
+                    adminPanel.classList.add('active');
+                    loadAdminData();
+                    updateAdminStats();
                 } else {
-                    currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-                    updateTicStatus(`Au tour du joueur ${currentPlayer}`);
+                    showNotification("Identifiants incorrects", "error");
                 }
             }
         }
 
-        function checkWinner() {
-            const winPatterns = [
-                [0, 1, 2], [3, 4, 5], [6, 7, 8], // Lignes
-                [0, 3, 6], [1, 4, 7], [2, 5, 8], // Colonnes
-                [0, 4, 8], [2, 4, 6] // Diagonales
-            ];
-            
-            return winPatterns.some(pattern => 
-                pattern.every(index => ticBoard[index] === currentPlayer)
-            );
+        function logoutAdmin() {
+            document.getElementById('adminPanel').classList.remove('active');
+            document.getElementById('accueil').classList.add('active');
+            showNotification("Déconnexion réussie", "success");
         }
 
-        function updateTicStatus(message) {
-            document.getElementById('tic-status').textContent = message;
-        }
-
-        function resetTicTacToe() {
-            initTicTacToe();
-        }
-
-        // Snake Game
-        let snakeCanvas, snakeCtx;
-        let snake = [{x: 200, y: 200}];
-        let direction = {x: 0, y: 0};
-        let food = {x: 0, y: 0};
-        let snakeScore = 0;
-        let snakeInterval;
-
-        function startSnake() {
-            snakeCanvas = document.getElementById('snake-canvas');
-            snakeCtx = snakeCanvas.getContext('2d');
-            snake = [{x: 200, y: 200}];
-            direction = {x: 20, y: 0};
-            snakeScore = 0;
-            generateFood();
-            
-            if (snakeInterval) clearInterval(snakeInterval);
-            snakeInterval = setInterval(updateSnake, 150);
-            document.getElementById('snake-start').textContent = 'Redémarrer';
-        }
-
-        function updateSnake() {
-            const head = {x: snake[0].x + direction.x, y: snake[0].y + direction.y};
-            
-            // Check collision with walls
-            if (head.x < 0 || head.x >= 400 || head.y < 0 || head.y >= 400) {
-                gameOver();
-                return;
-            }
-            
-            // Check collision with self
-            if (snake.some(segment => segment.x === head.x && segment.y === head.y)) {
-                gameOver();
-                return;
-            }
-            
-            snake.unshift(head);
-            
-            // Check if food eaten
-            if (head.x === food.x && head.y === food.y) {
-                snakeScore += 10;
-                document.getElementById('snake-score').textContent = snakeScore;
-                generateFood();
-            } else {
-                snake.pop();
-            }
-            
-            drawSnake();
-        }
-
-        function drawSnake() {
-            snakeCtx.fillStyle = 'rgba(0, 0, 0, 0.3)';
-            snakeCtx.fillRect(0, 0, 400, 400);
-            
-            // Draw snake
-            snakeCtx.fillStyle = '#4ecdc4';
-            snake.forEach(segment => {
-                snakeCtx.fillRect(segment.x, segment.y, 18, 18);
+        function showAdminTab(tabId) {
+            document.querySelectorAll('.admin-content').forEach(content => {
+                content.classList.remove('active');
             });
             
-            // Draw food
-            snakeCtx.fillStyle = '#ff6b6b';
-            snakeCtx.fillRect(food.x, food.y, 18, 18);
-        }
-
-        function generateFood() {
-            food = {
-                x: Math.floor(Math.random() * 20) * 20,
-                y: Math.floor(Math.random() * 20) * 20
-            };
-        }
-
-        function changeDirection(dir) {
-            switch(dir) {
-                case 'up': if (direction.y === 0) direction = {x: 0, y: -20}; break;
-                case 'down': if (direction.y === 0) direction = {x: 0, y: 20}; break;
-                case 'left': if (direction.x === 0) direction = {x: -20, y: 0}; break;
-                case 'right': if (direction.x === 0) direction = {x: 20, y: 0}; break;
-            }
-        }
-
-        function gameOver() {
-            clearInterval(snakeInterval);
-            alert(`Partie terminée ! Score final: ${snakeScore}`);
-        }
-
-        // Keyboard controls for Snake
-        document.addEventListener('keydown', (e) => {
-            if (document.getElementById('snake-game').classList.contains('active')) {
-                switch(e.key) {
-                    case 'ArrowUp': changeDirection('up'); break;
-                    case 'ArrowDown': changeDirection('down'); break;
-                    case 'ArrowLeft': changeDirection('left'); break;
-                    case 'ArrowRight': changeDirection('right'); break;
-                }
-            }
-        });
-
-        // Memory Game
-        let memoryCards = ['🎈', '🎁', '🎨', '🎵', '🎭', '🎪', '🎯', '🎲'];
-        let memoryBoard = [];
-        let flippedCards = [];
-        let memoryMoves = 0;
-        let memoryPairs = 0;
-
-        function initMemory() {
-            memoryBoard = [...memoryCards, ...memoryCards].sort(() => Math.random() - 0.5);
-            flippedCards = [];
-            memoryMoves = 0;
-            memoryPairs = 0;
-            
-            const board = document.getElementById('memory-board');
-            board.innerHTML = '';
-            
-            memoryBoard.forEach((card, index) => {
-                const button = document.createElement('button');
-                button.className = 'memory-card';
-                button.dataset.index = index;
-                button.onclick = () => flipCard(index);
-                board.appendChild(button);
+            document.querySelectorAll('.admin-menu a').forEach(link => {
+                link.classList.remove('active');
             });
             
-            updateMemoryStats();
-        }
-
-        function flipCard(index) {
-            if (flippedCards.length < 2 && !flippedCards.includes(index)) {
-                const card = document.querySelectorAll('.memory-card')[index];
-                card.textContent = memoryBoard[index];
-                card.classList.add('flipped');
-                flippedCards.push(index);
-                
-                if (flippedCards.length === 2) {
-                    memoryMoves++;
-                    setTimeout(checkMatch, 1000);
-                }
-            }
-        }
-
-        function checkMatch() {
-            const [first, second] = flippedCards;
-            const cards = document.querySelectorAll('.memory-card');
+            event.target.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
             
-            if (memoryBoard[first] === memoryBoard[second]) {
-                memoryPairs++;
-                cards[first].style.opacity = '0.5';
-                cards[second].style.opacity = '0.5';
-                
-                if (memoryPairs === 8) {
-                    setTimeout(() => alert(`Félicitations ! Vous avez gagné en ${memoryMoves} coups !`), 500);
-                }
-            } else {
-                cards[first].textContent = '';
-                cards[second].textContent = '';
-                cards[first].classList.remove('flipped');
-                cards[second].classList.remove('flipped');
-            }
-            
-            flippedCards = [];
-            updateMemoryStats();
-        }
-
-        function updateMemoryStats() {
-            document.getElementById('memory-moves').textContent = memoryMoves;
-            document.getElementById('memory-pairs').textContent = memoryPairs;
-        }
-
-        function resetMemory() {
-            initMemory();
-        }
-
-        // Quiz Game
-        let quizQuestions = [
-            {
-                question: "Quelle est la capitale de la France ?",
-                options: ["Berlin", "Madrid", "Paris", "Rome"],
-                correct: 2
-            },
-            {
-                question: "Combien y a-t-il de continents ?",
-                options: ["5", "6", "7", "8"],
-                correct: 2
-            },
-            {
-                question: "Qui a peint la Joconde ?",
-                options: ["Picasso", "Van Gogh", "Léonard de Vinci", "Monet"],
-                correct: 2
-            },
-            {
-                question: "Quelle planète est la plus proche du Soleil ?",
-                options: ["Vénus", "Mars", "Mercure", "Terre"],
-                correct: 2
-            },
-            {
-                question: "En quelle année a eu lieu la Révolution française ?",
-                options: ["1789", "1799", "1804", "1815"],
-                correct: 0
-            },
-            {
-                question: "Quel est le plus grand océan du monde ?",
-                options: ["Atlantique", "Indien", "Arctique", "Pacifique"],
-                correct: 3
-            },
-            {
-                question: "Combien de côtés a un hexagone ?",
-                options: ["5", "6", "7", "8"],
-                correct: 1
-            },
-            {
-                question: "Qui a écrit 'Les Misérables' ?",
-                options: ["Victor Hugo", "Émile Zola", "Gustave Flaubert", "Marcel Proust"],
-                correct: 0
-            },
-            {
-                question: "Quelle est la vitesse de la lumière ?",
-                options: ["300 000 km/s", "150 000 km/s", "450 000 km/s", "600 000 km/s"],
-                correct: 0
-            },
-            {
-                question: "Quel animal est le symbole de la sagesse ?",
-                options: ["Le renard", "L'éléphant", "La chouette", "Le dauphin"],
-                correct: 2
-            }
-        ];
-
-        let currentQuiz = 0;
-        let quizScore = 0;
-
-        function initQuiz() {
-            currentQuiz = 0;
-            quizScore = 0;
-            document.getElementById('quiz-reset').style.display = 'none';
-            showQuizQuestion();
-        }
-
-        function showQuizQuestion() {
-            if (currentQuiz < quizQuestions.length) {
-                const question = quizQuestions[currentQuiz];
-                document.getElementById('quiz-question').textContent = question.question;
-                document.getElementById('quiz-current').textContent = currentQuiz + 1;
-                document.getElementById('quiz-score').textContent = quizScore;
-                
-                const optionsDiv = document.getElementById('quiz-options');
-                optionsDiv.innerHTML = '';
-                
-                question.options.forEach((option, index) => {
-                    const button = document.createElement('button');
-                    button.className = 'quiz-option';
-                    button.textContent = option;
-                    button.onclick = () => selectQuizAnswer(index);
-                    optionsDiv.appendChild(button);
-                });
-            } else {
-                endQuiz();
+            if (tabId === 'dashboard') {
+                updateAdminStats();
             }
         }
 
-        function selectQuizAnswer(selected) {
-            const question = quizQuestions[currentQuiz];
-            const options = document.querySelectorAll('.quiz-option');
-            
-            options[selected].classList.add(selected === question.correct ? 'correct' : 'incorrect');
-            options[question.correct].classList.add('correct');
-            
-            if (selected === question.correct) {
-                quizScore += 10;
-            }
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.style.background = type === 'success' ? '#4CAF50' : '#f44336';
+            notification.classList.add('show');
             
             setTimeout(() => {
-                currentQuiz++;
-                showQuizQuestion();
-            }, 1500);
+                notification.classList.remove('show');
+            }, 3000);
         }
 
-        function endQuiz() {
-            document.getElementById('quiz-question').innerHTML = `
-                <h3>Quiz terminé ! 🎉</h3>
-                <p>Votre score final: ${quizScore}/100</p>
-                <p>${quizScore >= 70 ? 'Excellent travail !' : quizScore >= 50 ? 'Pas mal !' : 'Vous pouvez faire mieux !'}</p>
-            `;
-            document.getElementById('quiz-options').innerHTML = '';
-            document.getElementById('quiz-reset').style.display = 'inline-block';
+        // Fonctions pour le carrousel
+        function initCarousel() {
+            const carouselInner = document.getElementById('carouselInner');
+            carouselInner.innerHTML = '';
+            slides = [];
+            
+            database.galerie.filter(item => item.type === 'image').forEach((item, index) => {
+                const slide = document.createElement('div');
+                slide.className = 'carousel-item';
+                slide.style.backgroundImage = `url(${item.media})`;
+                slide.setAttribute('data-index', index);
+                carouselInner.appendChild(slide);
+                slides.push(slide);
+            });
+            
+            updateCarousel();
         }
 
-        function resetQuiz() {
-            initQuiz();
+        function updateCarousel() {
+            const carouselInner = document.getElementById('carouselInner');
+            carouselInner.style.transform = `translateX(-${currentSlide * 100}%)`;
         }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            updateCarousel();
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            updateCarousel();
+        }
+
+        // Fonctions pour le diaporama d'arrière-plan
+        function initBackgroundSlideshow() {
+            const slideshow = document.getElementById('backgroundSlideshow');
+            slideshow.innerHTML = '';
+            backgroundSlides = [];
+            
+            const images = database.settings.backgroundImages.split(',').filter(url => url.trim() !== '');
+            
+            images.forEach((image, index) => {
+                const slide = document.createElement('div');
+                slide.className = 'background-slide';
+                slide.style.backgroundImage = `url(${image.trim()})`;
+                slide.setAttribute('data-index', index);
+                slideshow.appendChild(slide);
+                backgroundSlides.push(slide);
+            });
+            
+            if (backgroundSlides.length > 0) {
+                backgroundSlides[0].classList.add('active');
+                let currentIndex = 0;
+                
+                backgroundInterval = setInterval(() => {
+                    backgroundSlides[currentIndex].classList.remove('active');
+                    currentIndex = (currentIndex + 1) % backgroundSlides.length;
+                    backgroundSlides[currentIndex].classList.add('active');
+                }, 5000);
+            }
+        }
+
+        // Fonctions pour le redimensionnement d'images
+        function setupImageUpload(inputId) {
+            const input = document.getElementById(inputId);
+            const previewId = `${inputId}Preview`;
+            const cropperId = `${inputId}Cropper`;
+            const controlsId = `${inputId}CropControls`;
+            
+            input.addEventListener('change', function(e) {
+                if (e.target.files.length === 0) return;
+                
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                
+                reader.onload = function(event) {
+                    // Afficher la prévisualisation
+                    const preview = document.getElementById(previewId);
+                    preview.src = event.target.result;
+                    preview.style.display = 'block';
+                    
+                    // Afficher les contrôles de recadrage
+                    const controls = document.getElementById(controlsId);
+                    controls.style.display = 'block';
+                    
+                    // Initialiser Cropper.js
+                    const cropperImg = document.getElementById(cropperId);
+                    cropperImg.src = event.target.result;
+                    
+                    if (cropper) {
+                        cropper.destroy();
+                    }
+                    
+                    cropper = new Cropper(cropperImg, {
+                        aspectRatio: 16 / 9,
+                        viewMode: 1,
+                        autoCropArea: 0.8,
+                        responsive: true,
+                        guides: false
+                    });
+                };
+                
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function cropImage(inputId) {
+            if (!cropper) return;
+            
+            const canvas = cropper.getCroppedCanvas({
+                width: 800,
+                height: 450,
+                minWidth: 400,
+                minHeight: 225,
+                maxWidth: 1200,
+                maxHeight: 675,
+                fillColor: '#fff',
+                imageSmoothingEnabled: true,
+                imageSmoothingQuality: 'high',
+            });
+            
+            const previewId = `${inputId}Preview`;
+            const preview = document.getElementById(previewId);
+            preview.src = canvas.toDataURL('image/jpeg', 0.8);
+            
+            // Masquer les contrôles de recadrage
+            const controls = document.getElementById(`${inputId}CropControls`);
+            controls.style.display = 'none';
+            
+            showNotification("Image recadrée avec succès");
+        }
+
+        // Gestion des documents
+        function handleDocumentUpload(file) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    resolve({
+                        data: e.target.result,
+                        name: file.name,
+                        type: file.type,
+                        size: file.size
+                    });
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // Chargement des données
+        function loadFrontendData() {
+            // Portfolio
+            const portfolioGrid = document.getElementById('portfolioGrid');
+            portfolioGrid.innerHTML = database.portfolio.slice(0, 4).map(item => `
+                <div class="portfolio-item">
+                    <div class="portfolio-image" style="background-image: url(${item.image})"></div>
+                    <div class="portfolio-content">
+                        <h4>${item.title}</h4>
+                        <p>${item.description}</p>
+                    </div>
+                </div>
+            `).join('');
+
+            // Galerie
+            const galleryGrid = document.getElementById('galleryGrid');
+            galleryGrid.innerHTML = database.galerie.map(item => `
+                <div class="portfolio-item">
+                    <div class="portfolio-image" style="background-image: url(${item.type === 'image' ? item.media : 'https://img.youtube.com/vi/' + item.media.split('v=')[1] + '/0.jpg'})">
+                        ${item.type === 'video' ? '<i class="fas fa-play"></i>' : ''}
+                    </div>
+                    <div class="portfolio-content">
+                        <h4>${item.title}</h4>
+                        ${item.type === 'video' ? `<a href="${item.media}" target="_blank" class="submit-btn" style="display: inline-block; margin-top: 0.5rem;">Voir la vidéo</a>` : ''}
+                    </div>
+                </div>
+            `).join('');
+
+            // Actualités
+            const newsList = document.getElementById('newsList');
+            newsList.innerHTML = database.actualites.map(news => `
+                <div class="news-item">
+                    <div class="news-date">${formatDate(news.date)}</div>
+                    <h4>${news.title}</h4>
+                    <p>${news.content}</p>
+                    ${news.image ? `<img src="${news.image}" style="max-width: 100%; margin-top: 1rem; border-radius: 8px;">` : ''}
+                </div>
+            `).join('');
+
+            // FAQ
+            const faqList = document.getElementById('faqList');
+            faqList.innerHTML = database.faq.map(item => `
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaqAnswer(${item.id})">
+                        ${item.question}
+                        <span>▼</span>
+                    </div>
+                    <div class="faq-answer" id="faqAnswer${item.id}">
+                        <p>${item.answer}</p>
+                    </div>
+                </div>
+            `).join('');
+
+            // Initialiser le carrousel
+            initCarousel();
+        }
+
+        function loadAdminData() {
+            // Actualités
+            const newsAdminList = document.getElementById('newsAdminList');
+            newsAdminList.innerHTML = database.actualites.map(news => `
+                <div class="card" style="margin-top: 1rem;">
+                    <h4>${news.title}</h4>
+                    <p>${news.content}</p>
+                    ${news.image ? `<img src="${news.image}" style="max-width: 200px; margin-top: 1rem; border-radius: 8px;">` : ''}
+                    <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                        <button onclick="deleteItem('actualites', ${news.id})" class="submit-btn" style="background: #ff6b6b;">Supprimer</button>
+                        <button onclick="editItem('actualites', ${news.id})" class="submit-btn">Modifier</button>
+                    </div>
+                </div>
+            `).join('');
+
+            // Portfolio
+            const portfolioAdminList = document.getElementById('portfolioAdminList');
+            portfolioAdminList.innerHTML = database.portfolio.map(item => `
+                <div class="card" style="margin-top: 1rem;">
+                    <h4>${item.title}</h4>
+                    <p>${item.description}</p>
+                    <img src="${item.image}" style="max-width: 200px; margin-top: 1rem; border-radius: 8px;">
+                    <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                        <button onclick="deleteItem('portfolio', ${item.id})" class="submit-btn" style="background: #ff6b6b;">Supprimer</button>
+                        <button onclick="editItem('portfolio', ${item.id})" class="submit-btn">Modifier</button>
+                    </div>
+                </div>
+            `).join('');
+
+            // Galerie
+            const galleryAdminList = document.getElementById('galleryAdminList');
+            galleryAdminList.innerHTML = database.galerie.map(item => `
+                <div class="card" style="margin-top: 1rem;">
+                    <h4>${item.title} (${item.type})</h4>
+                    ${item.type === 'image' ? 
+                        `<img src="${item.media}" style="max-width: 200px; margin-top: 1rem; border-radius: 8px;">` : 
+                        `<iframe width="200" height="150" src="${item.media}" frameborder="0" allowfullscreen></iframe>`
+                    }
+                    <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                        <button onclick="deleteItem('galerie', ${item.id})" class="submit-btn" style="background: #ff6b6b;">Supprimer</button>
+                        <button onclick="editItem('galerie', ${item.id})" class="submit-btn">Modifier</button>
+                    </div>
+                </div>
+            `).join('');
+
+            // FAQ
+            const faqAdminList = document.getElementById('faqAdminList');
+            faqAdminList.innerHTML = database.faq.map(item => `
+                <div class="card" style="margin-top: 1rem;">
+                    <h4>${item.question}</h4>
+                    <p>${item.answer}</p>
+                    <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                        <button onclick="deleteItem('faq', ${item.id})" class="submit-btn" style="background: #ff6b6b;">Supprimer</button>
+                        <button onclick="editItem('faq', ${item.id})" class="submit-btn">Modifier</button>
+                    </div>
+                </div>
+            `).join('');
+
+            // Inscriptions
+            const inscriptionsList = document.getElementById('inscriptionsList');
+            inscriptionsList.innerHTML = database.inscriptions.length > 0 ? 
+                database.inscriptions.map(inscription => `
+                    <div class="card" style="margin-top: 1rem;">
+                        <h4>${inscription.nom}</h4>
+                        <p>Email: ${inscription.email}</p>
+                        <p>Téléphone: ${inscription.telephone}</p>
+                        <p>Intérêt: ${inscription.interet}</p>
+                        <p>Date: ${formatDate(inscription.date)}</p>
+                        <button onclick="deleteItem('inscriptions', ${inscription.id})" class="submit-btn" style="background: #ff6b6b; margin-top: 1rem;">Supprimer</button>
+                    </div>
+                `).join('') : 
+                '<p>Aucune inscription pour le moment.</p>';
+
+            // Suggestions
+            const suggestionsList = document.getElementById('suggestionsList');
+            suggestionsList.innerHTML = database.suggestions.length > 0 ? 
+                database.suggestions.map(suggestion => `
+                    <div class="card" style="margin-top: 1rem;">
+                        <h4>${suggestion.nomProjet}</h4>
+                        <p>${suggestion.description}</p>
+                        <p>Catégorie: ${suggestion.categorie}</p>
+                        <p>Contact: ${suggestion.contact}</p>
+                        <p>Date: ${formatDate(suggestion.date)}</p>
+                        <button onclick="deleteItem('suggestions', ${suggestion.id})" class="submit-btn" style="background: #ff6b6b; margin-top: 1rem;">Supprimer</button>
+                    </div>
+                `).join('') : 
+                '<p>Aucune suggestion pour le moment.</p>';
+
+            // Documents
+            const documentsList = document.getElementById('documentsList');
+            documentsList.innerHTML = database.documents.length > 0 ? 
+                database.documents.map(doc => `
+                    <div class="document-item">
+                        <div class="document-info">
+                            <h4>${doc.title}</h4>
+                            <p>${doc.description}</p>
+                            <small>${doc.fileName}</small>
+                        </div>
+                        <div class="document-actions">
+                            <a href="${doc.file}" download class="submit-btn" style="display: inline-block; padding: 0.5rem 1rem;">Télécharger</a>
+                            <button onclick="deleteItem('documents', ${doc.id})" class="submit-btn" style="background: #ff6b6b;">Supprimer</button>
+                        </div>
+                    </div>
+                `).join('') : 
+                '<p>Aucun document pour le moment.</p>';
+
+            // Paramètres
+            document.getElementById('siteTitle').value = database.settings.siteTitle;
+            document.getElementById('adminEmail').value = database.settings.adminEmail;
+            document.getElementById('backgroundImages').value = database.settings.backgroundImages;
+
+            // Dernières inscriptions
+            const latestInscriptions = document.getElementById('latest-inscriptions');
+            const latest = database.inscriptions.slice(-3).reverse();
+            latestInscriptions.innerHTML = latest.length > 0 ? 
+                latest.map(inscription => `
+                    <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                        <p><strong>${inscription.nom}</strong></p>
+                        <p>${inscription.email}</p>
+                        <small>${formatDate(inscription.date)}</small>
+                    </div>
+                `).join('') : 
+                '<p>Aucune inscription récente.</p>';
+        }
+
+        function updateAdminStats() {
+            document.getElementById('stats-news').textContent = database.actualites.length;
+            document.getElementById('stats-portfolio').textContent = database.portfolio.length;
+            document.getElementById('stats-gallery').textContent = database.galerie.length;
+            document.getElementById('stats-inscriptions').textContent = database.inscriptions.length;
+        }
+
+        // Gestion des formulaires
+        document.getElementById('inscriptionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const newId = database.inscriptions.length > 0 ? Math.max(...database.inscriptions.map(i => i.id)) + 1 : 1;
+            
+            database.inscriptions.push({
+                id: newId,
+                nom: document.getElementById('nom').value,
+                email: document.getElementById('email').value,
+                telephone: document.getElementById('telephone').value,
+                interet: document.getElementById('interet').value,
+                date: new Date().toISOString()
+            });
+            
+            // Sauvegarder les modifications
+            saveDatabase();
+            
+            this.reset();
+            showNotification("Inscription réussie! Merci pour votre intérêt.");
+        });
+
+        document.getElementById('suggestionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const newId = database.suggestions.length > 0 ? Math.max(...database.suggestions.map(s => s.id)) + 1 : 1;
+            
+            database.suggestions.push({
+                id: newId,
+                nomProjet: document.getElementById('nomProjet').value,
+                description: document.getElementById('description').value,
+                categorie: document.getElementById('categorie').value,
+                contact: document.getElementById('contact').value,
+                date: new Date().toISOString()
+            });
+            
+            // Sauvegarder les modifications
+            saveDatabase();
+            
+            this.reset();
+            showNotification("Suggestion envoyée! Nous vous remercions.");
+        });
+
+        document.getElementById('newsForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const title = document.getElementById('newsTitle').value;
+            const content = document.getElementById('newsContent').value;
+            const imagePreview = document.getElementById('newsImagePreview');
+            
+            if (!title || !content) {
+                showNotification("Veuillez remplir tous les champs", "error");
+                return;
+            }
+            
+            const newId = database.actualites.length > 0 ? Math.max(...database.actualites.map(n => n.id)) + 1 : 1;
+            
+            database.actualites.push({
+                id: newId,
+                title,
+                content,
+                date: new Date().toISOString().split('T')[0],
+                image: imagePreview.src || null
+            });
+            
+            // Sauvegarder les modifications
+            saveDatabase();
+            
+            this.reset();
+            imagePreview.style.display = 'none';
+            loadAdminData();
+            updateAdminStats();
+            showNotification("Actualité ajoutée avec succès");
+        });
+
+        document.getElementById('portfolioForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const title = document.getElementById('portfolioTitle').value;
+            const description = document.getElementById('portfolioDescription').value;
+            const imagePreview = document.getElementById('portfolioImagePreview');
+            
+            if (!title || !description) {
+                showNotification("Veuillez remplir tous les champs", "error");
+                return;
+            }
+            
+            const newId = database.portfolio.length > 0 ? Math.max(...database.portfolio.map(p => p.id)) + 1 : 1;
+            
+            database.portfolio.push({
+                id: newId,
+                title,
+                description,
+                image: imagePreview.src || null
+            });
+            
+            // Sauvegarder les modifications
+            saveDatabase();
+            
+            this.reset();
+            imagePreview.style.display = 'none';
+            loadAdminData();
+            updateAdminStats();
+            showNotification("Projet ajouté au portfolio avec succès");
+        });
+
+        document.getElementById('galleryForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const title = document.getElementById('galleryTitle').value;
+            const type = document.getElementById('galleryType').value;
+            let media = '';
+            
+            if (type === 'image') {
+                const imagePreview = document.getElementById('galleryImagePreview');
+                if (!imagePreview.src) {
+                    showNotification("Veuillez sélectionner une image", "error");
+                    return;
+                }
+                media = imagePreview.src;
+            } else {
+                const videoUrl = document.getElementById('galleryVideo').value;
+                if (!videoUrl.includes('youtube.com') && !videoUrl.includes('youtu.be')) {
+                    showNotification("Veuillez entrer une URL YouTube valide", "error");
+                    return;
+                }
+                media = videoUrl;
+            }
+            
+            if (!title) {
+                showNotification("Veuillez remplir tous les champs", "error");
+                return;
+            }
+            
+            const newId = database.galerie.length > 0 ? Math.max(...database.galerie.map(g => g.id)) + 1 : 1;
+            
+            database.galerie.push({
+                id: newId,
+                title,
+                type,
+                media
+            });
+            
+            // Sauvegarder les modifications
+            saveDatabase();
+            
+            this.reset();
+            document.getElementById('galleryImagePreview').style.display = 'none';
+            document.getElementById('galleryVideo').value = '';
+            loadAdminData();
+            updateAdminStats();
+            showNotification("Élément ajouté à la galerie avec succès");
+        });
+
+        document.getElementById('faqForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const question = document.getElementById('faqQuestion').value;
+            const answer = document.getElementById('faqAnswer').value;
+            
+            if (!question || !answer) {
+                showNotification("Veuillez remplir tous les champs", "error");
+                return;
+            }
+            
+            const newId = database.faq.length > 0 ? Math.max(...database.faq.map(f => f.id)) + 1 : 1;
+            
+            database.faq.push({
+                id: newId,
+                question,
+                answer
+            });
+            
+            // Sauvegarder les modifications
+            saveDatabase();
+            
+            this.reset();
+            loadAdminData();
+            updateAdminStats();
+            showNotification("Question ajoutée à la FAQ avec succès");
+        });
+
+        document.getElementById('documentForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const title = document.getElementById('documentTitle').value;
+            const description = document.getElementById('documentDescription').value;
+            const fileInput = document.getElementById('documentFile');
+            
+            if (!title || !description || fileInput.files.length === 0) {
+                showNotification("Veuillez remplir tous les champs", "error");
+                return;
+            }
+            
+            const file = fileInput.files[0];
+            const fileData = await handleDocumentUpload(file);
+            
+            const newId = database.documents.length > 0 ? Math.max(...database.documents.map(d => d.id)) + 1 : 1;
+            
+            database.documents.push({
+                id: newId,
+                title,
+                description,
+                file: fileData.data,
+                fileName: fileData.name
+            });
+            
+            // Sauvegarder les modifications
+            saveDatabase();
+            
+            this.reset();
+            loadAdminData();
+            showNotification("Document ajouté avec succès");
+        });
+
+        document.getElementById('settingsForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const siteTitle = document.getElementById('siteTitle').value;
+            const adminEmail = document.getElementById('adminEmail').value;
+            const adminPassword = document.getElementById('adminPassword').value;
+            const backgroundImages = document.getElementById('backgroundImages').value;
+            
+            if (!siteTitle || !adminEmail) {
+                showNotification("Veuillez remplir tous les champs obligatoires", "error");
+                return;
+            }
+            
+            database.settings.siteTitle = siteTitle;
+            database.settings.adminEmail = adminEmail;
+            
+            if (adminPassword) {
+                database.admin.password = adminPassword;
+            }
+            
+            database.settings.backgroundImages = backgroundImages;
+            
+            // Sauvegarder les modifications
+            saveDatabase();
+            
+            // Recharger le diaporama d'arrière-plan
+            clearInterval(backgroundInterval);
+            initBackgroundSlideshow();
+            
+            showNotification("Paramètres enregistrés avec succès");
+        });
+
+        // Fonctions utilitaires
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('fr-FR', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+        }
+
+        function toggleFaqAnswer(id) {
+            const answer = document.getElementById(`faqAnswer${id}`);
+            const question = answer.previousElementSibling;
+            
+            answer.classList.toggle('active');
+            question.querySelector('span').textContent = answer.classList.contains('active') ? '▲' : '▼';
+        }
+
+        function deleteItem(collection, id) {
+            if (!confirm("Êtes-vous sûr de vouloir supprimer cet élément ?")) return;
+            
+            database[collection] = database[collection].filter(item => item.id !== id);
+            
+            // Sauvegarder les modifications
+            saveDatabase();
+            
+            loadAdminData();
+            updateAdminStats();
+            showNotification("Élément supprimé avec succès");
+        }
+
+        function editItem(collection, id) {
+            const item = database[collection].find(i => i.id === id);
+            if (!item) return;
+            
+            // Pour simplifier, nous allons juste supprimer et recréer l'élément
+            if (confirm("Modifier cet élément ? Il sera supprimé puis vous pourrez le recréer avec les nouvelles données.")) {
+                deleteItem(collection, id);
+                
+                // Afficher le formulaire approprié
+                switch (collection) {
+                    case 'actualites':
+                        showAdminTab('actualites-admin');
+                        document.getElementById('newsTitle').value = item.title;
+                        document.getElementById('newsContent').value = item.content;
+                        break;
+                    case 'portfolio':
+                        showAdminTab('portfolio-admin');
+                        document.getElementById('portfolioTitle').value = item.title;
+                        document.getElementById('portfolioDescription').value = item.description;
+                        break;
+                    case 'galerie':
+                        showAdminTab('galerie-admin');
+                        document.getElementById('galleryTitle').value = item.title;
+                        document.getElementById('galleryType').value = item.type;
+                        if (item.type === 'image') {
+                            document.getElementById('galleryImagePreview').src = item.media;
+                            document.getElementById('galleryImagePreview').style.display = 'block';
+                        } else {
+                            document.getElementById('galleryVideo').value = item.media;
+                        }
+                        break;
+                    case 'faq':
+                        showAdminTab('faq-admin');
+                        document.getElementById('faqQuestion').value = item.question;
+                        document.getElementById('faqAnswer').value = item.answer;
+                        break;
+                }
+            }
+        }
+
+        function exportData() {
+            const dataStr = JSON.stringify(database, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            
+            const exportFileDefaultName = `manla-backup-${new Date().toISOString().split('T')[0]}.json`;
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+            
+            showNotification("Données exportées avec succès");
+        }
+
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    database = importedData;
+                    
+                    // Sauvegarder les nouvelles données
+                    saveDatabase();
+                    
+                    // Recharger toutes les données
+                    loadFrontendData();
+                    loadAdminData();
+                    updateAdminStats();
+                    initBackgroundSlideshow();
+                    
+                    showNotification("Données importées avec succès");
+                } catch (error) {
+                    showNotification("Erreur lors de l'importation des données", "error");
+                    console.error(error);
+                }
+            };
+            reader.readAsText(file);
+            
+            // Réinitialiser l'input file
+            event.target.value = '';
+        }
+
+        function changeTheme(theme) {
+            document.body.className = `theme-${theme}`;
+            localStorage.setItem('manla-theme', theme);
+        }
+
+        // Initialisation
+        function init() {
+            // Charger le thème sauvegardé
+            const savedTheme = localStorage.getItem('manla-theme') || 'purple';
+            changeTheme(savedTheme);
+            
+            // Charger la base de données
+            database = getDatabase();
+            
+            // Mettre à jour l'heure et le thème
+            updateTimeAndTheme();
+            setInterval(updateTimeAndTheme, 1000);
+            
+            // Initialiser le diaporama d'arrière-plan
+            initBackgroundSlideshow();
+            
+            // Configurer les téléversements d'images
+            setupImageUpload('newsImage');
+            setupImageUpload('portfolioImage');
+            setupImageUpload('galleryImage');
+            
+            // Configurer le changement de type dans le formulaire de galerie
+            document.getElementById('galleryType').addEventListener('change', function() {
+                const type = this.value;
+                document.getElementById('galleryImageField').style.display = type === 'image' ? 'block' : 'none';
+                document.getElementById('galleryVideoField').style.display = type === 'video' ? 'block' : 'none';
+            });
+            
+            // Charger les données
+            loadFrontendData();
+            
+            // Démarrer le carrousel
+            carouselInterval = setInterval(nextSlide, 5000);
+            
+            // Afficher une notification de bienvenue
+            setTimeout(() => {
+                showNotification("Bienvenue sur le site de l'ONG Man-La!");
+            }, 1000);
+        }
+
+        // Démarrer l'application
+        window.onload = init;
     </script>
 </body>
 </html>
